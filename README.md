@@ -22,4 +22,29 @@ The system utilizes two specialized local models working in tandem:
 - **ATS-Friendly:** Outputs high-quality, ATS-optimized PDF documents compiled via LaTeX.
 - **Multilingual Support (i18n):** Native support for generating documents in multiple languages using localized fields in the database.
 
+## 🛠️ Installation & Usage
+
+### Prerequisites
+- [Ollama](https://ollama.com/) installed and running locally.
+- Models downloaded: `llama3.1` and `qwen2.5-coder:14b` (or `7b`).
+- Python 3.10+
+- MongoDB instance running (local or cloud).
+
+### Setup
+```bash
+# Clone the repository and setup virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment variables (ensure .env has your MONGODB_URI)
+```
+
+### Run the CLI
+```bash
+python src/main.py
+```
+
 *The result is a hyper-targeted, ATS-friendly PDF resume and cover letter generated in minutes, with zero data sent to external cloud AI providers.*
