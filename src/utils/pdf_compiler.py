@@ -20,7 +20,7 @@ class PDFCompiler:
             
         return code.strip()
 
-    def compile(self, latex_code: str, document_type: str = "resume", filename: str = "document") -> str:
+    def compile(self, latex_code: str, document_type: str = "resume", language: str = "en", filename: str = "document") -> str:
         """
         Saves the LaTeX code to a .tex file and compiles it into a PDF.
         Returns the path to the generated PDF on success, or an empty string on failure.
@@ -28,9 +28,9 @@ class PDFCompiler:
         import datetime
         clean_code = self.clean_latex_code(latex_code)
         
-        # Create a unique project folder based on timestamp and document type
+        # Create a unique project folder based on timestamp, language, and document type
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        project_folder_name = f"{timestamp}_{document_type}"
+        project_folder_name = f"{timestamp}_{language}_{document_type}"
         project_dir = os.path.join(self.output_dir, project_folder_name)
         os.makedirs(project_dir, exist_ok=True)
         

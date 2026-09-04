@@ -1,33 +1,20 @@
-import ollama
 from src.config import Config
+from src.agents.base import AgentFactory
+from src.prompts.reasoner_prompts import get_reasoner_prompt
 
 class ReasonerAgent:
     def __init__(self, model_name: str = Config.REASONER_MODEL):
         self.model_name = model_name
-        self.client = ollama.Client(host=Config.OLLAMA_HOST, timeout=Config.OLLAMA_TIMEOUT)
+        self.llm = AgentFactory.create_agent()
 
     def analyze_and_filter(self, job_description: str, professional_data: dict) -> str:
         print(f"🧠 STARTING STAGE 1: {self.model_name} (Reasoning and Selection)")
         print(f"Loading {self.model_name} into RAM (This might take a few seconds)...")
         
-        reasoning_prompt = f"""
-        You are an HR Specialist.
-        Here is the job description: '{job_description}'.
+        prompt = get_reasoner_prompt(job_description, professional_data)
         
-        Here is the candidate's professional data (JSON format):
-        {professional_data}
+        filtered_content = self.llm.generate(prompt=prompt, model_name=self.model_name)
         
-        Which of these experiences should I focus on for the resume? (Summarize in plain text).
-        """
-
-        response = self.client.generate(
-
-            model=self.model_name,
-            prompt=reasoning_prompt,
-            keep_alive=0  # FUNDAMENTAL: Unload model from RAM as soon as it finishes!
-        )
-        
-        filtered_content = response['response']
         print(f"\n✅ {self.model_name} summary completed:\n", filtered_content)
         print(f"\n🧹 {self.model_name} removed from RAM.\n")
         

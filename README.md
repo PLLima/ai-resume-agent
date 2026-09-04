@@ -16,7 +16,8 @@ The system utilizes two specialized local models working in tandem:
 
 ## ✨ Features
 
-- **Privacy-First:** 100% local execution using Ollama. Zero data is sent to external cloud AI providers.
+- **Privacy-First:** 100% local execution using Ollama by default. Zero data is sent to external cloud AI providers.
+- **Config-Driven Strategy:** AI models are decoupled from the agent logic. You can easily upgrade or swap providers (e.g., from Ollama to Gemini) by modifying the `.env` file and leveraging the `BaseAgent` interface.
 - **Database-Driven:** Your career is a database. Update your MongoDB documents once, and generate infinite permutations of resumes.
 - **Hyper-Targeted:** Every resume and cover letter is uniquely tailored to the specific job description provided.
 - **ATS-Friendly:** Outputs high-quality, ATS-optimized PDF documents compiled via LaTeX.
@@ -36,20 +37,26 @@ The system utilizes two specialized local models working in tandem:
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install dependencies
-pip install -r requirements.txt
+# Install requirements (if any)
+pip install ollama pymongo python-dotenv
 
-# Configure environment variables (ensure .env has your MONGODB_URI)
+# Set up your environment variables
+cp .env.example .env
+# Edit .env to add your MongoDB URI and set your preferred AI models.
+# You can also configure OLLAMA_NUM_CTX in .env to balance memory usage 
+# with context limits (e.g., set to 8192 or 4096).
 ```
 
 ### Run the CLI
-You can generate either a resume or a cover letter by passing it as an argument:
+You can generate either a resume or a cover letter, and optionally specify the language (defaults to `en`):
 ```bash
-python src/main.py resume
-# or
-python src/main.py cover_letter
+python src/main.py [document_type] [language]
+
+# Examples:
+python src/main.py resume en
+python src/main.py cover_letter fr
 ```
 
-The generated LaTeX and the compiled PDF will be saved in a timestamped folder inside the `output/` directory (e.g., `output/2026-09-04_14-30-00_resume/`).
+The generated LaTeX and the compiled PDF will be saved in a timestamped, localized folder inside the `output/` directory (e.g., `output/2026-09-04_14-30-00_en_resume/`).
 
 *The result is a hyper-targeted, ATS-friendly PDF resume and cover letter generated in minutes, with zero data sent to external cloud AI providers.*
