@@ -43,8 +43,13 @@ pip install -r requirements.txt
 ```
 
 ### Run the CLI
+You can generate either a resume or a cover letter by passing it as an argument:
 ```bash
-python src/main.py
+python src/main.py resume
+# or
+python src/main.py cover_letter
 ```
+
+The generated LaTeX and the compiled PDF will be saved in a timestamped folder inside the `output/` directory (e.g., `output/2026-09-04_14-30-00_resume/`).
 
 *The result is a hyper-targeted, ATS-friendly PDF resume and cover letter generated in minutes, with zero data sent to external cloud AI providers.*

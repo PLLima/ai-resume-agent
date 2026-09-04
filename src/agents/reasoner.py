@@ -4,6 +4,7 @@ from src.config import Config
 class ReasonerAgent:
     def __init__(self, model_name: str = Config.REASONER_MODEL):
         self.model_name = model_name
+        self.client = ollama.Client(host=Config.OLLAMA_HOST, timeout=Config.OLLAMA_TIMEOUT)
 
     def analyze_and_filter(self, job_description: str, professional_data: dict) -> str:
         print(f"🧠 STARTING STAGE 1: {self.model_name} (Reasoning and Selection)")
@@ -19,7 +20,8 @@ class ReasonerAgent:
         Which of these experiences should I focus on for the resume? (Summarize in plain text).
         """
 
-        response = ollama.generate(
+        response = self.client.generate(
+
             model=self.model_name,
             prompt=reasoning_prompt,
             keep_alive=0  # FUNDAMENTAL: Unload model from RAM as soon as it finishes!

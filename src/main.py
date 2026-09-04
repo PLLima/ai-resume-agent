@@ -7,9 +7,17 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.db.client import DatabaseClient
 from src.agents.reasoner import ReasonerAgent
 from src.agents.coder import CoderAgent
+from src.utils.pdf_compiler import PDFCompiler
 
 def main():
     print("🚀 Initializing AI Resume & Cover Letter Architect CLI...\n")
+    
+    # Optional CLI arguments for document type
+    document_type = "resume" # can be 'resume' or 'cover_letter'
+    if len(sys.argv) > 1 and sys.argv[1] in ["resume", "cover_letter"]:
+        document_type = sys.argv[1]
+        
+    print(f"📄 Target Document Type: {document_type.replace('_', ' ').title()}")
     
     # 1. Database Connection Skeleton
     db_client = DatabaseClient()
@@ -26,9 +34,16 @@ def main():
     
     # 3. Coder Agent (Qwen 2.5 Coder)
     coder = CoderAgent()
-    latex_output = coder.generate_latex(filtered_content)
+    latex_output = coder.generate_latex(filtered_content, document_type=document_type)
     
-    print("\n🎉 Pipeline execution successful!")
+    # 4. PDF Compilation
+    compiler = PDFCompiler()
+    pdf_path = compiler.compile(latex_output, document_type=document_type, filename=f"generated_{document_type}")
+    
+    if pdf_path:
+        print(f"\n🎉 Pipeline execution successful! Document saved at: {pdf_path}")
+    else:
+        print("\n⚠️ Pipeline executed, but PDF compilation encountered errors.")
 
 if __name__ == "__main__":
     main()
