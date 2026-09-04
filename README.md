@@ -37,8 +37,8 @@ The system utilizes two specialized local models working in tandem:
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install requirements (if any)
-pip install ollama pymongo python-dotenv
+# Install project dependencies
+pip install -r requirements.txt
 
 # Set up your environment variables
 cp .env.example .env
