@@ -1,3 +1,8 @@
+"""
+Module containing prompts for the Reasoner Agent.
+"""
+
+
 def get_reasoner_prompt(job_description: str, professional_data: dict) -> str:
     """
     Returns the prompt used for the Reasoner agent.

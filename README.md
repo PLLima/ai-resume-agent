@@ -48,15 +48,15 @@ cp .env.example .env
 ```
 
 ### Run the CLI
-You can generate either a resume or a cover letter, and optionally specify the language (defaults to `en`):
+You can generate either a resume or a cover letter, and optionally specify the language (defaults to `en`). You can also specify target parameters for better filenames and processing:
 ```bash
-python src/main.py [document_type] [language]
+python src/main.py [document_type] [language] --role [role] --company [company] --country [country]
 
 # Examples:
-python src/main.py resume en
-python src/main.py cover_letter fr
+python src/main.py resume en --role software-engineer --company amazon --country germany
+python src/main.py cover_letter fr --role data-scientist --company google --country france
 ```
 
-The generated LaTeX and the compiled PDF will be saved in a timestamped, localized folder inside the `output/` directory (e.g., `output/2026-09-04_14-30-00_en_resume/`).
+The generated LaTeX and the compiled PDF will be saved in a Cloudinary-compatible, language-aware folder structure inside the `output/` directory (e.g., `output/resumes/en/2026-09-04_14-30-00_software-engineer_amazon_germany_en_resume.pdf`).
 
 *The result is a hyper-targeted, ATS-friendly PDF resume and cover letter generated in minutes, with zero data sent to external cloud AI providers.*
