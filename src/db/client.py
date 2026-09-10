@@ -2,7 +2,6 @@
 MongoDB Database Client Module
 """
 
-# pyrefly: ignore [missing-import]
 from pymongo import MongoClient
 
 from src.config import Config
@@ -50,6 +49,13 @@ class DatabaseClient:
                     "description": {
                         "en": ["Developed C++ ML models", "Optimized PyTorch pipelines"]
                     },
+                }
+            ],
+            "interests": [
+                {
+                    "title": {"en": "Open Source Contribution"},
+                    "description": {"en": "Contributing to ML libraries"},
+                    "metadata": {"showOnWebsite": True, "displayOrder": 1},
                 }
             ],
         }

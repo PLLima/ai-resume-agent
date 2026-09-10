@@ -60,3 +60,16 @@ python src/main.py cover_letter fr --role data-scientist --company google --coun
 The generated LaTeX and the compiled PDF will be saved in a Cloudinary-compatible, language-aware folder structure inside the `output/` directory (e.g., `output/resumes/en/2026-09-04_14-30-00_software-engineer_amazon_germany_en_resume.pdf`).
 
 *The result is a hyper-targeted, ATS-friendly PDF resume and cover letter generated in minutes, with zero data sent to external cloud AI providers.*
+
+## 🐛 Troubleshooting
+
+### VS Code Pyrefly/Pylance Missing Imports
+If VS Code shows errors like `Cannot find module 'ollama' Pyrefly(missing-import)` or similar for `pymongo` / `dotenv`, it means the editor's linting extension is using the system Python interpreter instead of the virtual environment. 
+
+This project includes a `pyproject.toml` specifically configured to force Pyrefly to use the `.venv` interpreter and correctly set the import root to avoid `src.*` import errors. 
+
+If you are still seeing warnings:
+1. Ensure your `.venv` is created in the project root.
+2. Open the Command Palette (`Ctrl+Shift+P`).
+3. Search for **Python: Select Interpreter** and select `./.venv/bin/python`.
+4. Restart your VS Code window (`Ctrl+Shift+P` -> **Developer: Reload Window**).

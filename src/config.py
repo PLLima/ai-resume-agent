@@ -4,7 +4,6 @@ Configuration module for the AI Resume Agent.
 
 import os
 
-# pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
 
 # Load environment variables from .env

@@ -4,9 +4,9 @@ PDF Compiler Module
 This module provides the PDFCompiler class to clean and compile LaTeX code into PDFs.
 """
 
+import datetime
 import os
 import subprocess
-import datetime
 
 
 class PDFCompiler:

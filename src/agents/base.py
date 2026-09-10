@@ -4,7 +4,6 @@ Base Agent Module.
 
 from abc import ABC, abstractmethod
 
-# pyrefly: ignore [missing-import]
 import ollama
 
 from src.config import Config
