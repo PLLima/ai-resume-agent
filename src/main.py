@@ -5,6 +5,7 @@ Main CLI orchestration script for generating professional documents.
 # pylint: disable=wrong-import-position,import-error
 
 import argparse
+import datetime
 import os
 import sys
 
@@ -62,6 +63,10 @@ def main():
     db_client = DatabaseClient()
     professional_data = db_client.get_professional_data()
 
+    if not professional_data:
+        print("❌ Error: No professional data found in the database. Cannot proceed.")
+        sys.exit(1)
+
     target_role = (
         f"{role.replace('-', ' ').title()} at {company.title()} in {country.title()}"
     )
@@ -86,6 +91,28 @@ def main():
 
     if pdf_path:
         print(f"\n🎉 Pipeline execution successful! Document saved at: {pdf_path}")
+
+        metadata = {
+            "professionalId": professional_data.get("_id"),
+            "metadata": {
+                "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "targetLanguage": language,
+                "targetRole": role,
+                "targetCompany": company,
+                "targetCountry": country,
+                "templateUsed": "default"
+            },
+            "finalOutput": {
+                "pdfUrl": pdf_path
+            }
+        }
+
+        if document_type == "resume":
+            inserted_id = db_client.save_resume(metadata)
+            print(f"💾 Resume metadata saved to MongoDB with ID: {inserted_id}")
+        else:
+            inserted_id = db_client.save_cover_letter(metadata)
+            print(f"💾 Cover Letter metadata saved to MongoDB with ID: {inserted_id}")
     else:
         print("\n⚠️ Pipeline executed, but PDF compilation encountered errors.")
 

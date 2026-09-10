@@ -2,6 +2,9 @@
 MongoDB Database Client Module
 """
 
+from typing import Any
+
+from bson.objectid import ObjectId
 from pymongo import MongoClient
 
 from src.config import Config
@@ -17,45 +20,31 @@ class DatabaseClient:
         self.client = MongoClient(Config.MONGODB_URI)
         self.db = self.client[Config.DB_NAME]
 
-    def get_professional_data(self):
+    def get_professional_data(
+        self, professional_id: str | None = None
+    ) -> dict[str, Any] | None:
         """
-        Skeleton for fetching professional data.
-        In the future, this will fetch directly from self.db.professionals.find_one({...})
-        using the schema defined in ai_context.md.
+        Fetches professional data from the MongoDB database.
+        If professional_id is provided, fetches that specific document.
+        Otherwise, fetches the first available professional document.
         """
-        print("Fetching data for professional from MongoDB (skeleton)...")
-        return {
-            "name": "Jane Doe",
-            "skills": [
-                {
-                    "category": "hard_skill",
-                    "subCategory": "Languages",
-                    "name": {"en": "C++"},
-                    "proficiencyLevel": 5,
-                },
-                {
-                    "category": "hard_skill",
-                    "subCategory": "Frameworks",
-                    "name": {"en": "Machine Learning"},
-                    "proficiencyLevel": 4,
-                },
-            ],
-            "experiences": [
-                {
-                    "title": {"en": "Software Engineer"},
-                    "company": {"en": "Tech Corp"},
-                    "location": {"en": "Berlin, Germany"},
-                    "timeline": {"startDate": "2020-01", "endDate": None},
-                    "description": {
-                        "en": ["Developed C++ ML models", "Optimized PyTorch pipelines"]
-                    },
-                }
-            ],
-            "interests": [
-                {
-                    "title": {"en": "Open Source Contribution"},
-                    "description": {"en": "Contributing to ML libraries"},
-                    "metadata": {"showOnWebsite": True, "displayOrder": 1},
-                }
-            ],
-        }
+        print("Fetching data for professional from MongoDB...")
+        if professional_id:
+            return self.db.professionals.find_one({"_id": ObjectId(professional_id)})
+        return self.db.professionals.find_one()
+
+    def save_resume(self, resume_data: dict[str, Any]) -> str:
+        """
+        Saves a generated resume record to the database.
+        Returns the stringified ObjectId of the inserted document.
+        """
+        result = self.db.resumes.insert_one(resume_data)
+        return str(result.inserted_id)
+
+    def save_cover_letter(self, cover_letter_data: dict[str, Any]) -> str:
+        """
+        Saves a generated cover letter record to the database.
+        Returns the stringified ObjectId of the inserted document.
+        """
+        result = self.db.coverLetters.insert_one(cover_letter_data)
+        return str(result.inserted_id)
