@@ -22,7 +22,7 @@ def main():
     """
     Orchestrates the resume/cover letter generation pipeline.
     """
-    # pylint: disable=too-many-locals
+    # pylint: disable=too-many-locals,too-many-statements
     print("🚀 Initializing AI Resume & Cover Letter Architect CLI...\n")
 
     parser = argparse.ArgumentParser(description="AI Resume & Cover Letter Architect")
@@ -42,23 +42,39 @@ def main():
 
     # Target-specific parameters
     parser.add_argument(
-        "--role", default="software-engineer", help="Target role for the document"
+        "--role", default=None, help="Target role for the document"
     )
     parser.add_argument("--company", default="unknown-company", help="Target company")
     parser.add_argument("--country", default="unknown-country", help="Target country")
+    parser.add_argument(
+        "--strategy",
+        default="online_ats",
+        choices=["in_person", "online_ats", "general"],
+        help="Strategy rules to apply (in_person, online_ats, or general)",
+    )
 
     args = parser.parse_args()
     document_type = args.document_type
     language = args.language
-    role = args.role
+    strategy = args.strategy
     company = args.company
     country = args.country
+
+    role = args.role
+    if not role:
+        if strategy == "in_person":
+            role = "general-tech-in-person-networking"
+        elif strategy == "online_ats":
+            role = "software-engineer-embedded-linux"
+        else:
+            role = "software-engineer"
 
     print(f"📄 Target Document Type: {document_type.replace('_', ' ').title()}")
     print(f"🌍 Target Language: {language.upper()}")
     print(f"👔 Target Role: {role.replace('-', ' ').title()}")
     print(f"🏢 Target Company: {company.title()}")
     print(f"🗺️  Target Country: {country.title()}")
+    print(f"🎯 Strategy: {strategy.replace('_', ' ').title()}")
 
     db_client = DatabaseClient()
     professional_data = db_client.get_professional_data()
@@ -73,11 +89,15 @@ def main():
 
     reasoner = ReasonerAgent()
     filtered_content = reasoner.analyze_and_filter(
-        job_description=target_role, professional_data=professional_data
+        job_description=target_role,
+        professional_data=professional_data,
+        strategy=strategy,
     )
 
     coder = CoderAgent()
-    latex_output = coder.generate_latex(filtered_content, document_type=document_type)
+    latex_output = coder.generate_latex(
+        filtered_content, document_type=document_type, strategy=strategy
+    )
 
     compiler = PDFCompiler()
     pdf_path = compiler.compile(

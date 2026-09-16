@@ -20,18 +20,15 @@ class CoderAgent:
         self.llm = AgentFactory.create_agent()
 
     def generate_latex(
-        self, filtered_content: str, document_type: str = "resume"
+        self, filtered_content: str, document_type: str = "resume", strategy: str = "general"
     ) -> str:
         """
-        Generates LaTeX code from the provided filtered content.
+        Generates LaTeX code based on the filtered professional data.
         """
-        print("-" * 50)
-        print(
-            f"💻 STARTING STAGE 2: {self.model_name} (LaTeX {document_type.capitalize()} Generation)"
-        )
-        print(f"Loading {self.model_name} into RAM (This might take a bit longer)...")
+        print(f"👨‍💻 STARTING STAGE 2: {self.model_name} (LaTeX Generation)")
+        print(f"Loading {self.model_name} into RAM (This might take a few seconds)...")
 
-        prompt = get_coder_prompt(filtered_content, document_type)
+        prompt = get_coder_prompt(filtered_content, document_type, strategy)
 
         final_latex = self.llm.generate(prompt=prompt, model_name=self.model_name)
 

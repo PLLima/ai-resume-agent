@@ -48,12 +48,13 @@ cp .env.example .env
 ```
 
 ### Run the CLI
-You can generate either a resume or a cover letter, and optionally specify the language (defaults to `en`). You can also specify target parameters for better filenames and processing:
+You can generate either a resume or a cover letter, and optionally specify the language (defaults to `en`). You can also specify target parameters for better filenames and processing, as well as the `--strategy` to apply specific AI generation rules (defaults to `online_ats`):
 ```bash
-python src/main.py [document_type] [language] --role [role] --company [company] --country [country]
+python src/main.py [document_type] [language] --role [role] --company [company] --country [country] --strategy [strategy]
 
 # Examples:
-python src/main.py resume en --role software-engineer --company amazon --country germany
+python src/main.py resume en --role software-engineer --company amazon --country germany --strategy online_ats
+python src/main.py resume en --strategy in_person
 python src/main.py cover_letter fr --role data-scientist --company google --country france
 ```
 
