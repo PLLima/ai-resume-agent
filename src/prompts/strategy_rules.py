@@ -24,6 +24,14 @@ Strategy Rules for Online/ATS Resumes:
 5. Formatting: Strategically use \\textbf{} inside bullet points to highlight key technologies (e.g., C++, STM32) and metrics. Always leave a blank line between consecutive \\resumeItem or \\resumeExperience commands to prevent LaTeX overlapping.
 """
 
+LINGUISTIC_FORMATTING_RULES = """
+Linguistic & Formatting Directives:
+1. Portuguese (PT-BR): Strictly use 1st-person past tense active verbs (e.g., use 'Projetei', 'Arquitetei', 'Desenvolvi'. NEVER use 3rd person like 'Desenvolveu', and NEVER use literal translations like 'Engenhei'). Ensure degree names are localized (e.g., 'Mestrado em Engenharia').
+2. French (FR): Strictly start all bullet points with Action Nouns (e.g., 'Conception', 'Recherche', 'Enseignement', 'Inspection'). Never use conjugated verbs or past participles to start a bullet point.
+3. Parallelism & Punctuation: Ensure absolute grammatical parallelism within every list. End every single bullet point with a period.
+4. Casing: Enforce strict Sentence Casing for Skills, Focus Areas, and Interests (e.g., 'Aprendizado de máquina', 'Culture pop & jeux vidéo').
+"""
+
 def get_strategy_rules(strategy: str) -> str:
     """
     Returns the combined string of strategy rules based on the strategy type.
@@ -33,5 +41,7 @@ def get_strategy_rules(strategy: str) -> str:
         rules += IN_PERSON_RULES
     elif strategy == "online_ats":
         rules += ONLINE_ATS_RULES
+
+    rules += "\n" + LINGUISTIC_FORMATTING_RULES
 
     return rules.strip()
