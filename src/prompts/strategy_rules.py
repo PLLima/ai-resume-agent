@@ -3,13 +3,17 @@ Module containing strategy rules for different types of resumes.
 """
 
 COURSEWORK_END_DATE_RULE = """
-Education Dates Formatting: Evaluate dates relative to the current date.
+Education Dates Formatting (Strategic ATS Anchoring): Your goal is to bypass rigid ATS graduation-year filters while maximizing keyword relevance based on the target job description. First, check 'metadata.ongoing' and 'metadata.type' for each entry.
 
-- Past Degrees: If endDate is in the past, output "Completed: [Month] [Year]" (EN) | "Concluído: [Mês] [Ano]" (PT-BR) | "Diplôme obtenu : [Mois] [Année]" (FR).
+- Past Degrees ('ongoing: false'): Always output 'Completed: [Month] [Year]' (EN) | 'Concluído: [Mês] [Ano]' (PT-BR) | 'Diplôme obtenu : [Mois] [Année]' (FR).
 
-- Future/Current Degrees: Find the closest future date to today across all degrees (evaluating both courseworkEndDate and endDate). For the degree associated with this closest date, output "Expected: [Month] [Year]" (EN) | "Previsão: [Mês] [Ano]" (PT-BR) | "Diplôme attendu : [Mois] [Année]" (FR).
+- Active Degrees ('ongoing: true'): Group active degrees by 'metadata.type'. For EACH type, you must select ONE degree to act as the "ATS Anchor".
 
-- Omission Rule for Concurrent Degrees: For all other future degrees of the same type that have a date later than this closest date, omit the date entirely (leave the date string completely blank).
+   - Selection Logic: Choose the anchor degree whose timeline ('courseworkEndDate' or 'endDate') and specialization best aligns with the target job's requirements (e.g., if the job requires a 2028 graduation, anchor to the 2028 degree. If the job strictly requires a specific "Computer Engineering" timeline, anchor to that degree).
+
+   - Formatting: For the chosen Anchor Degree ONLY, output 'Expected: [Month] [Year]' (EN) | 'Previsão: [Mês] [Ano]' (PT-BR) | 'Diplôme attendu : [Mois] [Année]' (FR).
+
+- Omission Rule: You must OMIT the date entirely (leave the string completely blank: {}) for all other concurrent active degrees within that same 'metadata.type'. The ATS will still parse the keywords (e.g., Computer Engineering) without miscalculating the graduation year.
 """
 
 IN_PERSON_RULES = """
