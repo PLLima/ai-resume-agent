@@ -40,6 +40,13 @@ Linguistic & Formatting Directives:
 2. French (FR): Strictly start all bullet points with Action Nouns (e.g., 'Conception', 'Recherche', 'Enseignement', 'Inspection'). Never use conjugated verbs or past participles to start a bullet point.
 3. Parallelism & Punctuation: Ensure absolute grammatical parallelism within every list. End every single bullet point with a period.
 4. Casing: Enforce strict Sentence Casing for Skills, Focus Areas, and Interests (e.g., 'Aprendizado de máquina', 'Culture pop & jeux vidéo').
+5. Advanced Linguistic, Stylistic & Typographical Mastery: Ensure native-level fluency and absolute structural integrity in the target language. Strictly avoid the following:
+   - Morphological Errors: Prevent overregularization, incorrect pluralization, and wrong verb forms (ensure exact gender/number agreement for all nouns and adjectives).
+   - Lexical Errors, Calques & Collocations: Avoid literal translations, false friends, and confused word pairs. Strictly use native-level professional collocations and precise industry terminology.
+   - Syntactic Errors: Ensure flawless subject-verb agreement, natural idiomatic word order, and correct preposition usage. Strictly avoid comma splices and dangling modifiers.
+   - Semantic, Pragmatic & Stylistic (Zero AI Fluff): Maintain a highly professional, academic, and technical register. Eliminate ambiguity, passive voice, unnecessary wordiness, and tonal inconsistencies. Absolutely eradicate hollow AI filler adverbs/adjectives (e.g., 'seamlessly', 'successfully', 'robust', 'cutting-edge').
+   - Coherence & Cohesion: Maintain logical flow and cause-and-effect coherence within bullet points (Action $\\rightarrow$ Result). Ensure accurate use of relative pronouns and transitional phrasing to bind clauses naturally.
+   - Orthographic & Typographical Localization: Adhere strictly to target-language typography (e.g., French requires a non-breaking space before two-part punctuation like ' : ' and ' ; '). Properly localize all number and decimal formats (e.g., EN uses '4,000.00', PT-BR uses '4.000,00', FR uses '4 000,00' or LaTeX '4,000').
 """
 
 def get_strategy_rules(strategy: str) -> str:
