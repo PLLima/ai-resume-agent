@@ -3,7 +3,15 @@ Module containing strategy rules for different types of resumes.
 """
 
 COURSEWORK_END_DATE_RULE = """
-For any education entry that has a coursework end date separate from the official degree end date (e.g., if you are currently in your penultimate year and have finished coursework), render the dates explicitly using both fields like so: 'Expected [Coursework Month/Year] (Coursework) / [End Year] (Official Degree)'.
+Education Dates Formatting: When an education entry contains a courseworkEndDate that is separate from the endDate, explicitly render both dates using a forward slash (/) separator, formatted accurately by language:
+
+EN: 'Coursework Completion: [Month/Year] / Official Degree: [Year]'
+
+PT-BR: 'Conclusão das disciplinas: [Mês/Ano] / Diploma oficial: [Ano]'
+
+FR: 'Fin des cours : [Mois/Année] / Diplôme officiel : [Année]'
+
+If courseworkEndDate is null or identical to endDate, strictly use the standard prefixes (EN: 'Expected: [Year]' | PT-BR: 'Previsão: [Year]' | FR: 'Diplôme attendu : [Year]').
 """
 
 IN_PERSON_RULES = """
