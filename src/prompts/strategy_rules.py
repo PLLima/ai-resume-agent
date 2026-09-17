@@ -3,17 +3,15 @@ Module containing strategy rules for different types of resumes.
 """
 
 COURSEWORK_END_DATE_RULE = """
-Education Dates Formatting (Strategic ATS Anchoring): Your goal is to bypass rigid ATS graduation-year filters while maximizing keyword relevance based on the target job description. First, check 'metadata.ongoing' and 'metadata.type' for each entry.
+Education Dates Formatting (Strategic ATS Anchoring & Multi-Anchor): Your goal is to bypass rigid ATS graduation-year filters while maximizing keyword relevance based on the target job description. First, check 'metadata.ongoing' and 'metadata.type' for each entry.
 
 - Past Degrees ('ongoing: false'): Always output 'Completed: [Month] [Year]' (EN) | 'Concluído: [Mês] [Ano]' (PT-BR) | 'Diplôme obtenu : [Mois] [Année]' (FR).
 
-- Active Degrees ('ongoing: true'): Group active degrees by 'metadata.type'. For EACH type, you must select ONE degree to act as the "ATS Anchor".
+- Active Entries ('ongoing: true'): Group active entries by 'metadata.type'. For EACH type, identify the earliest approaching milestone (evaluating 'courseworkEndDate' then 'endDate').
 
-   - Selection Logic: Choose the anchor degree whose timeline ('courseworkEndDate' or 'endDate') and specialization best aligns with the target job's requirements (e.g., if the job requires a 2028 graduation, anchor to the 2028 degree. If the job strictly requires a specific "Computer Engineering" timeline, anchor to that degree).
+- Multi-Anchor Selection: ALL active entries within a type that share this exact earliest date are designated as "ATS Anchors". For THESE entries, output 'Expected: [Month] [Year]' (EN) | 'Previsão: [Mês] [Ano]' (PT-BR) | 'Diplôme attendu : [Mois] [Année]' (FR).
 
-   - Formatting: For the chosen Anchor Degree ONLY, output 'Expected: [Month] [Year]' (EN) | 'Previsão: [Mês] [Ano]' (PT-BR) | 'Diplôme attendu : [Mois] [Année]' (FR).
-
-- Omission Rule: You must OMIT the date entirely (leave the string completely blank: {}) for all other concurrent active degrees within that same 'metadata.type'. The ATS will still parse the keywords (e.g., Computer Engineering) without miscalculating the graduation year.
+- Omission Rule (Concurrent Programs): For any concurrent active entries in that type with later dates, you must OMIT the date to prevent ATS miscalculation. Instead of a date, output 'Double Degree' (EN) | 'Duplo Diploma' (PT-BR) | 'Double diplôme' (FR) if the type is "degree". For other types, output 'Concurrent Course' (EN) | 'Curso Simultâneo' (PT-BR) | 'Formation simultanée' (FR).
 """
 
 IN_PERSON_RULES = """
@@ -39,7 +37,10 @@ Linguistic & Formatting Directives:
 1. Portuguese (PT-BR): Strictly use 1st-person past tense active verbs (e.g., use 'Projetei', 'Arquitetei', 'Desenvolvi'. NEVER use 3rd person like 'Desenvolveu', and NEVER use literal translations like 'Engenhei'). Ensure degree names are localized (e.g., 'Mestrado em Engenharia').
 2. French (FR): Strictly start all bullet points with Action Nouns (e.g., 'Conception', 'Recherche', 'Enseignement', 'Inspection'). Never use conjugated verbs or past participles to start a bullet point.
 3. Parallelism & Punctuation: Ensure absolute grammatical parallelism within every list. End every single bullet point with a period.
-4. Casing: Enforce strict Sentence Casing for Skills, Focus Areas, and Interests (e.g., 'Aprendizado de máquina', 'Culture pop & jeux vidéo').
+4. Casing, Post-Colon Formatting & Terminology:
+   - Skill Lists: For comma-separated lists (e.g., Technical Skills), enforce Title Case for all items in English and Portuguese (e.g., '\\textbf{Core Competencies:} System Architecture, Machine Learning'). In French, enforce strict lowercase for all items (e.g., 'architecture système, apprentissage automatique') except for proper nouns like 'Python'.
+   - Interests/Focus Areas: Enforce Sentence Casing. After a colon, capitalize the first letter in English/PT-BR. In French, the first letter after a colon must be lowercase unless it is a proper noun.
+   - Terminology: Accurately translate terms (e.g., use 'Apprentissage automatique' in FR, not 'Machine Learning'). Never capitalize generic nouns like 'anime' or 'manga' in any language.
 5. Advanced Linguistic, Stylistic & Typographical Mastery: Ensure native-level fluency and absolute structural integrity in the target language. Strictly avoid the following:
    - Morphological Errors: Prevent overregularization, incorrect pluralization, and wrong verb forms (ensure exact gender/number agreement for all nouns and adjectives).
    - Lexical Errors, Calques & Collocations: Avoid literal translations, false friends, and confused word pairs. Strictly use native-level professional collocations and precise industry terminology.
@@ -47,6 +48,14 @@ Linguistic & Formatting Directives:
    - Semantic, Pragmatic & Stylistic (Zero AI Fluff): Maintain a highly professional, academic, and technical register. Eliminate ambiguity, passive voice, unnecessary wordiness, and tonal inconsistencies. Absolutely eradicate hollow AI filler adverbs/adjectives (e.g., 'seamlessly', 'successfully', 'robust', 'cutting-edge').
    - Coherence & Cohesion: Maintain logical flow and cause-and-effect coherence within bullet points (Action $\\rightarrow$ Result). Ensure accurate use of relative pronouns and transitional phrasing to bind clauses naturally.
    - Orthographic & Typographical Localization: Adhere strictly to target-language typography (e.g., French requires a non-breaking space before two-part punctuation like ' : ' and ' ; '). Properly localize all number and decimal formats (e.g., EN uses '4,000.00', PT-BR uses '4.000,00', FR uses '4 000,00' or LaTeX '4,000').
+"""
+
+SECTION_TITLES_AND_ALIGNMENT_RULES = """
+Section Titles & Alignment Constraints:
+1. Standardize the skills section title to exactly 'Technical & Language Skills' (localized to the target language).
+2. NEVER use bare \\begin{itemize} commands, as default LaTeX margins will break the document's spatial grid. You MUST apply these exact enumitem parameters:
+   - For Flat Lists (Skills & Interests): Use exactly \\begin{itemize}[leftmargin=0pt, label={}, itemsep=1pt, parsep=0pt] to snap the text perfectly flush-left with the section headers.
+   - For Nested Bullets (Experience & Projects): Use exactly \\begin{itemize}[leftmargin=0.22in, topsep=1pt, itemsep=1pt, parsep=0pt] (or topsep=2pt depending on the template) to perfectly align the bullets with the text block.
 """
 
 def get_strategy_rules(strategy: str) -> str:
@@ -60,5 +69,6 @@ def get_strategy_rules(strategy: str) -> str:
         rules += ONLINE_ATS_RULES
 
     rules += "\n" + LINGUISTIC_FORMATTING_RULES
+    rules += "\n" + SECTION_TITLES_AND_ALIGNMENT_RULES
 
     return rules.strip()
