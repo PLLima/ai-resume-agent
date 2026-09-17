@@ -3,15 +3,13 @@ Module containing strategy rules for different types of resumes.
 """
 
 COURSEWORK_END_DATE_RULE = """
-Education Dates Formatting: When an education entry contains a courseworkEndDate that is separate from the endDate, explicitly render both dates using a forward slash (/) separator, formatted accurately by language:
+Education Dates Formatting: Evaluate dates relative to the current date.
 
-EN: 'Coursework Completion: [Month/Year] / Official Degree: [Year]'
+- Past Degrees: If endDate is in the past, output "Completed: [Month] [Year]" (EN) | "Concluído: [Mês] [Ano]" (PT-BR) | "Diplôme obtenu : [Mois] [Année]" (FR).
 
-PT-BR: 'Conclusão das disciplinas: [Mês/Ano] / Diploma oficial: [Ano]'
+- Future/Current Degrees: Find the closest future date to today across all degrees (evaluating both courseworkEndDate and endDate). For the degree associated with this closest date, output "Expected: [Month] [Year]" (EN) | "Previsão: [Mês] [Ano]" (PT-BR) | "Diplôme attendu : [Mois] [Année]" (FR).
 
-FR: 'Fin des cours : [Mois/Année] / Diplôme officiel : [Année]'
-
-If courseworkEndDate is null or identical to endDate, strictly use the standard prefixes (EN: 'Expected: [Year]' | PT-BR: 'Previsão: [Year]' | FR: 'Diplôme attendu : [Year]').
+- Omission Rule for Concurrent Degrees: For all other future degrees of the same type that have a date later than this closest date, omit the date entirely (leave the date string completely blank).
 """
 
 IN_PERSON_RULES = """
