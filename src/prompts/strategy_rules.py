@@ -17,19 +17,19 @@ Education Dates Formatting (Strategic ATS Anchoring & Multi-Anchor): Your goal i
 IN_PERSON_RULES = """
 Strategy Rules for In-Person Resumes:
 1. Professional Summary (Objective): Keep it modular with placeholders for role and duration if needed (e.g., [SEEKING INTERNSHIP: TARGET ROLE / DOMAIN] -- [DURATION: 5 MONTHS | START: AUG 2027]).
-2. Narrative Theme: Bridge algorithmic problem-solving with scalable system architecture.
-3. Projects/Experiences: Limit to exactly 3 top experiences (IDE Jr., BasiCS Tutor, LASCAR) and 3 top projects (EI Climat, Voice CRM, 3D Tower Defense) to fit on one page with the photo header.
+2. Narrative Theme: Bridge algorithmic problem-solving with scalable system architecture, but also depending on the job posting.
+3. Projects/Experiences: Limit to exactly 3 top experiences (choose them depending on what is more relevant for the job posting) and 3 top projects (choose them depending on what is more relevant for the job posting) to fit on one page with the photo header.
 4. Formatting Rules: Must fit strictly on one page. Use \\pagestyle{empty}, 10pt font, 0.75in side margins, 0.5in top/bottom margins, circular profile picture (Profile Photo.jpg, 2.4cm), and fontawesome5 icons. Reduce \\titlespacing and \\resumeItem paddings to 1mm.
 5. Additional Sections: Include 'Interests' tailored to soft skills (Travel, Culinary, Pop Culture). Do NOT include 'Achievements' to save space.
 """
 
 ONLINE_ATS_RULES = """
 Strategy Rules for Online/ATS Resumes:
-1. Professional Summary: Focus on low-level programming (C/C++), embedded systems, firmware, and hardware-software integration.
-2. Projects: Include exactly 4 technical projects emphasizing C, STM32, Hardware SPI, and hardware prototyping. Add a GitHub link note at the end of the section.
-3. Experience: Include ALL experiences, but sort them by descending relevance to Embedded Systems/Hardware.
+1. Professional Summary: Focus on what the job requires and how you can help the company. Keep it short and concise. Highlight your technical skills and experiences that are relevant to the job posting.
+2. Projects: Highlight your technical skills and experiences that are relevant to the job posting. Add a GitHub link note at the end of the section.
+3. Experience: Include ALL experiences, but sort them by descending relevance to the job posting.
 4. Additional Sections: Include 'Achievements' to signal strong mathematical and analytical problem-solving skills.
-5. Formatting: Strategically use \\textbf{} inside bullet points to highlight key technologies (e.g., C++, STM32) and metrics. Always leave a blank line between consecutive \\resumeItem or \\resumeExperience commands to prevent LaTeX overlapping.
+5. Formatting: Always leave a blank line between consecutive \\resumeItem or \\resumeExperience commands to prevent LaTeX overlapping.
 """
 
 LINGUISTIC_FORMATTING_RULES = """
