@@ -41,9 +41,7 @@ def main():
     )
 
     # Target-specific parameters
-    parser.add_argument(
-        "--role", default=None, help="Target role for the document"
-    )
+    parser.add_argument("--role", default=None, help="Target role for the document")
     parser.add_argument("--company", default="unknown-company", help="Target company")
     parser.add_argument("--country", default="unknown-country", help="Target country")
     parser.add_argument(
@@ -120,11 +118,9 @@ def main():
                 "targetRole": role,
                 "targetCompany": company,
                 "targetCountry": country,
-                "templateUsed": "default"
+                "templateUsed": "default",
             },
-            "finalOutput": {
-                "pdfUrl": pdf_path
-            }
+            "finalOutput": {"pdfUrl": pdf_path},
         }
 
         if document_type == "resume":

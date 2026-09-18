@@ -58,6 +58,12 @@ Section Titles & Alignment Constraints:
    - For Nested Bullets (Experience & Projects): Use exactly \\begin{itemize}[leftmargin=0.22in, topsep=1pt, itemsep=1pt, parsep=0pt] (or topsep=2pt depending on the template) to perfectly align the bullets with the text block.
 """
 
+MARKDOWN_TO_LATEX_RULES = """
+Markdown to LaTeX Emphasis:
+Translate Markdown emphasis syntax into LaTeX: use *word* for bold (e.g., \\textbf{word}) and **word** for italic (e.g., \\textit{word}). This ensures dynamic emphasis of key metrics and technologies. Never print the raw asterisks in the final LaTeX output.
+"""
+
+
 def get_strategy_rules(strategy: str) -> str:
     """
     Returns the combined string of strategy rules based on the strategy type.

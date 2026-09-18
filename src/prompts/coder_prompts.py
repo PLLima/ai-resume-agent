@@ -2,7 +2,7 @@
 Module containing prompts for the Coder Agent.
 """
 
-from src.prompts.strategy_rules import get_strategy_rules
+from src.prompts.strategy_rules import MARKDOWN_TO_LATEX_RULES, get_strategy_rules
 
 
 def get_coder_prompt(
@@ -23,6 +23,8 @@ def get_coder_prompt(
     Generate ONLY valid LaTeX code without any markdown formatting or explanations.
 
     {strategy_text}
+    
+    {MARKDOWN_TO_LATEX_RULES}
 
     Experience points:
     {filtered_content}

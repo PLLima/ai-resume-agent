@@ -20,7 +20,10 @@ class CoderAgent:
         self.llm = AgentFactory.create_agent()
 
     def generate_latex(
-        self, filtered_content: str, document_type: str = "resume", strategy: str = "general"
+        self,
+        filtered_content: str,
+        document_type: str = "resume",
+        strategy: str = "general",
     ) -> str:
         """
         Generates LaTeX code based on the filtered professional data.
