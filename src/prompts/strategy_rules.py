@@ -30,6 +30,7 @@ Strategy Rules for Online/ATS Resumes:
 3. Experience: Include ALL experiences, but sort them by descending relevance to the job posting.
 4. Additional Sections: Include 'Achievements' to signal strong mathematical and analytical problem-solving skills.
 5. Formatting: Always leave a blank line between consecutive \\resumeItem or \\resumeExperience commands to prevent LaTeX overlapping.
+6. Professional Summary Emphasis: When generating or inserting the Professional Summary, strategically apply Markdown emphasis (*bold*) to highlight 3 to 5 core competencies, academic milestones, or domain-specific keywords (e.g., *scalable system architecture* or *Master of Engineering*). Following Rule 8, these must translate directly into \\textbf{} in the final LaTeX output to immediately draw the recruiter's eye to your most critical qualifications.
 """
 
 LINGUISTIC_FORMATTING_RULES = """
