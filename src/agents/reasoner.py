@@ -17,7 +17,7 @@ class ReasonerAgent:
         self.llm = AgentFactory.create_agent()
 
     def analyze_and_filter(
-        self, job_description: str, professional_data: dict, strategy: str = "general"
+        self, job_description: str, professional_data: dict, strategy: str = "general", document_type: str = "resume"
     ) -> str:
         """
         Analyzes the job description and professional data to filter relevant experiences.
@@ -25,7 +25,7 @@ class ReasonerAgent:
         print(f"🧠 STARTING STAGE 1: {self.model_name} (Reasoning and Selection)")
         print(f"Loading {self.model_name} into RAM (This might take a few seconds)...")
 
-        prompt = get_reasoner_prompt(job_description, professional_data, strategy)
+        prompt = get_reasoner_prompt(job_description, professional_data, strategy, document_type)
 
         filtered_content = self.llm.generate(prompt=prompt, model_name=self.model_name)
 

@@ -17,7 +17,7 @@ The system utilizes two specialized local models working in tandem:
 ## ✨ Features
 
 - **Privacy-First:** 100% local execution using Ollama by default. Zero data is sent to external cloud AI providers.
-- **Config-Driven Strategy:** AI models are decoupled from the agent logic. You can easily upgrade or swap providers (e.g., from Ollama to Gemini) by modifying the `.env` file and leveraging the `BaseAgent` interface.
+- **Config-Driven Strategy:** AI models are decoupled from the agent logic. You can easily upgrade or swap providers (e.g., from Ollama to Gemini) by modifying the `.env` file and leveraging the `BaseAgent` interface. The internal prompt engine also dynamically adapts linguistic and formatting constraints based on the `document_type` (e.g., bypassing ATS limits for Cover Letters or compressing In-Person resumes).
 - **Database-Driven:** Your career is a database. Update your MongoDB documents once, and generate infinite permutations of resumes.
 - **Hyper-Targeted:** Every resume and cover letter is uniquely tailored to the specific job description provided.
 - **ATS-Friendly:** Outputs high-quality, ATS-optimized PDF documents compiled via LaTeX.

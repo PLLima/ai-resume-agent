@@ -2,7 +2,7 @@
 Module containing prompts for the Coder Agent.
 """
 
-from src.prompts.strategy_rules import MARKDOWN_TO_LATEX_RULES, get_strategy_rules
+from src.prompts.strategy_rules import get_strategy_rules
 
 
 def get_coder_prompt(
@@ -12,7 +12,7 @@ def get_coder_prompt(
     Returns the prompt used for the Coder agent to generate LaTeX.
     """
     doc_type_clean = document_type.replace("_", " ")
-    strategy_text = get_strategy_rules(strategy) if document_type == "resume" else ""
+    strategy_text = get_strategy_rules(strategy, document_type)
 
     return f"""
     You are an expert LaTeX programmer.
@@ -23,9 +23,6 @@ def get_coder_prompt(
     Generate ONLY valid LaTeX code without any markdown formatting or explanations.
 
     {strategy_text}
-    
-    {MARKDOWN_TO_LATEX_RULES}
-
     Experience points:
     {filtered_content}
     """

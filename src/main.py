@@ -90,6 +90,7 @@ def main():
         job_description=target_role,
         professional_data=professional_data,
         strategy=strategy,
+        document_type=document_type,
     )
 
     coder = CoderAgent()
