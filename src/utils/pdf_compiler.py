@@ -86,7 +86,7 @@ class PDFCompiler:
 
             pdf_path = os.path.join(project_dir, f"{filename_base}.pdf")
             if result.returncode == 0:
-                print(f"✅ PDF successfully compiled: {pdf_path}")
+                print(f"✅ PDF compiled: {pdf_path}")
                 return pdf_path
 
             print(
