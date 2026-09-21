@@ -6,7 +6,10 @@ from src.prompts.strategy_rules import get_strategy_rules
 
 
 def get_reasoner_prompt(
-    job_description: str, professional_data: dict, strategy: str = "general", document_type: str = "resume"
+    job_description: str,
+    professional_data: dict,
+    strategy: str = "general",
+    document_type: str = "resume",
 ) -> str:
     """
     Returns the prompt used for the Reasoner agent.
