@@ -69,7 +69,7 @@ ATS_SECTION_TITLES_7 = r"""
 
 - NEVER use bare \begin{itemize} commands, as default LaTeX margins will break the document's spatial grid. You MUST apply these exact enumitem parameters: Flat Lists (Skills/Interests): \begin{itemize}[leftmargin=0pt, label={}, itemsep=1pt, parsep=0pt] | Nested Bullets (Experience/Projects): \begin{itemize}[leftmargin=0.22in, topsep=1pt, itemsep=1pt, parsep=0pt] (or topsep=2pt based on template). Always leave a blank line between consecutive \resumeItem or \resumeExperience commands to prevent LaTeX overlapping.
 
-- Macros & Projects: For ATS templates, leave the second parameter of \resumeItem empty for projects (e.g., \resumeItem{Project Name}{}{Date}) to prevent ATS overflow and tabular wrapping. Infer specific event details for achievements from the title/issuer.
+- Macros & Projects: For ATS templates, leave the second parameter of \resumeItem empty for projects (e.g., \resumeItem{Project Name}{}{Date}) to prevent ATS overflow and tabular wrapping. For achievements, directly extract data from the database fields (event, eventType, awardOrRole) to format exactly as: \par\vspace{1.5mm}\noindent\textbf{event} \textbar{} \textit{eventType / awardOrRole} \hfill \textcolor{darkgray}{Formatted Date}\par
 """
 
 IN_PERSON_SECTION_TITLES_7 = r"""
