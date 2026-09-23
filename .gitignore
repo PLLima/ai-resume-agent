@@ -219,6 +219,7 @@ __marimo__/
 
 # AI Context
 ai_context.md
+agent-system-prompts.md
 
 # Compiled Output
 output/
