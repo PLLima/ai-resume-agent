@@ -9,7 +9,7 @@ Strategy Rules for Online/ATS Resumes:
 3. Experience: Include ALL experiences, but sort them by descending relevance to the job posting.
 4. Additional Sections: Include 'Achievements' to signal strong mathematical and analytical problem-solving skills.
 5. Formatting: Always leave a blank line between consecutive \resumeItem or \resumeExperience commands to prevent LaTeX overlapping.
-6. Professional Summary Emphasis: Strategically apply Markdown emphasis ('*bold*') to highlight 3 to 5 core competencies, academic milestones, or domain-specific keywords (e.g., *scalable system architecture* or *Master of Engineering*). These must translate directly into \textbf{} in the final LaTeX output to immediately draw the recruiter's eye to your most critical qualifications.
+6. Professional Summary Emphasis: Strategically apply Markdown emphasis ('*bold*') to highlight 3 to 5 core competencies, academic milestones, or domain-specific keywords (e.g., *scalable system architecture* or *Master of Engineering*).
 """
 
 IN_PERSON_STRATEGY = r"""
@@ -44,6 +44,10 @@ SHARED_EDUCATION_DATES_5 = r"""
 - Multi-Anchor Selection: ALL active entries within a type that share this exact earliest date are designated as "ATS Anchors". For THESE entries, output 'Expected: [Month] [Year]' (EN) | 'Previsão: [Mês] [Ano]' (PT-BR) | 'Diplôme attendu : [Mois] [Année]' (FR).
 
 - Omission Rule (Concurrent Programs): For any concurrent active entries in that type with later dates, you must OMIT the date to prevent ATS miscalculation. Instead of a date, output 'Double Degree' (EN) | 'Duplo Diploma' (PT-BR) | 'Double diplôme' (FR) if the type is "degree". For other types, output 'Concurrent Course' (EN) | 'Curso Simultâneo' (PT-BR) | 'Formation simultanée' (FR).
+"""
+
+SHARED_EDUCATION_DESCRIPTION_MAPPING = r"""
+- Education Description Mapping: Strictly render the localized 'resumeDescription' string directly below the \resumeExperience{} command for each education entry using a single itemized bullet point for ALL templates. For in-person templates, prepend \footnotesize inside the item (e.g., \item \footnotesize Text).
 """
 
 SHARED_ADVANCED_LINGUISTIC_6 = r"""
@@ -105,6 +109,7 @@ def get_strategy_rules(strategy: str, document_type: str = "resume") -> str:
             rules += "LINGUISTIC & FORMATTING DIRECTIVES:\n\n"
             rules += SHARED_LINGUISTIC_2_TO_4.strip() + "\n\n"
             rules += SHARED_EDUCATION_DATES_5.strip() + "\n\n"
+            rules += SHARED_EDUCATION_DESCRIPTION_MAPPING.strip() + "\n\n"
             rules += SHARED_ADVANCED_LINGUISTIC_6.strip() + "\n\n"
             rules += IN_PERSON_SECTION_TITLES_7.strip() + "\n\n"
             rules += MARKDOWN_RULE_8.strip()
@@ -114,6 +119,7 @@ def get_strategy_rules(strategy: str, document_type: str = "resume") -> str:
             rules += SHARED_DATA_MAPPING_1.strip() + "\n\n"
             rules += SHARED_LINGUISTIC_2_TO_4.strip() + "\n\n"
             rules += SHARED_EDUCATION_DATES_5.strip() + "\n\n"
+            rules += SHARED_EDUCATION_DESCRIPTION_MAPPING.strip() + "\n\n"
             rules += SHARED_ADVANCED_LINGUISTIC_6.strip() + "\n\n"
             rules += ATS_SECTION_TITLES_7.strip() + "\n\n"
             rules += MARKDOWN_RULE_8.strip()
