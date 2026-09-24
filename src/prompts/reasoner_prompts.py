@@ -25,6 +25,10 @@ def get_reasoner_prompt(
 
     Here is the candidate's professional data (JSON format):
     {professional_data}
-    
-    Which of these experiences should I focus on for the {doc_type_clean}? (Summarize in plain text).
+
+    Analyze the data against the job description. Output a structured blueprint detailing:
+    1. Which `educations`, `experiences`, `projects`, `volunteering`, and `achievements` entries to include. By default, include the highest level of completed education and ongoing ones. Limit to 2-3 educations maximum, prioritizing the two best ones.
+    2. For EACH included entry, you MUST explicitly tag it with either:
+       - [TARGET MATCH]: If the entry directly addresses core technical/business requirements of the job description.
+       - [SECONDARY ENTRY]: If the entry is included for background, timeline continuity, or supplementary soft skills.
     """

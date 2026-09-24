@@ -16,13 +16,14 @@ def get_coder_prompt(
 
     return f"""
     You are an expert LaTeX programmer.
-    Based on the following experience points, generate a COMPLETE,
+    Based on the following experience points and the Reasoner's blueprint, generate a COMPLETE,
     professional, and compilable LaTeX {doc_type_clean}.
     You must include the document class (e.g., \\documentclass{{article}}),
     preamble, and \\begin{{document}} ... \\end{{document}}.
     Generate ONLY valid LaTeX code without any markdown formatting or explanations.
 
     {strategy_text}
-    Experience points:
+
+    Reasoner's Blueprint & Experience points:
     {filtered_content}
     """
