@@ -14,7 +14,6 @@ def get_reasoner_prompt(
     """
     Returns the prompt used for the Reasoner agent.
     """
-    doc_type_clean = document_type.replace("_", " ")
     strategy_text = get_strategy_rules(strategy, document_type)
 
     return f"""

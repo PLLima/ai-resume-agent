@@ -23,9 +23,9 @@ class PDFCompiler:
         """Removes markdown code blocks if the LLM output wrapped the LaTeX code."""
         code = raw_code.strip()
         if code.startswith("```latex"):
-            code = code[len("```latex") :]
+            code = code[len("```latex"):]
         elif code.startswith("```"):
-            code = code[len("```") :]
+            code = code[len("```"):]
 
         code = code.removesuffix("```")
 
