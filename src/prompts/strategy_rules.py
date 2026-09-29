@@ -124,9 +124,10 @@ LINGUISTIC & FORMATTING DIRECTIVES:
 
 GENERALIST_ONLINE_RESUME_STRATEGY = r"""
 Strategy Rules for Generalist Online Resumes:
-1. Length Constraint: STRICTLY enforce a 1-page limit for early-career or internship stages.
-2. Data Mapping: As there is no specific Job Description, assume the role of an HR Specialist curating a strong Generalist SWE profile. Use `detailedDescription` for the 2-3 most recent or globally impactful `experiences` and `projects`. Fall back to `briefDescription` for all other `experiences`, `projects`, and `volunteering` to guarantee the document fits exactly on 1 page.
-3. Geographical Formatting: Default to the Continental Standard (include photo and interests) unless the language dictates otherwise (e.g., if English, default to Anglo-Saxon Standard: no photo, no interests).
+1. Length Constraint & Margins: STRICTLY enforce a 1-page limit by reducing document margins to 0.5in horizontally and 0.4in vertically, and completely omitting page numbers using \pagestyle{empty}.
+2. Data Mapping (Extreme Brevity): Select EXACTLY the 3 most impactful experiences and 3 most impactful projects. Strictly render ONLY the briefDescription string (a single-bullet STAR summary) for these entries. Render the resumeDescription string for education.
+3. Global Scaling: Inject a global font scaling command immediately after \pagestyle{empty} and before the header. Use \small for the Anglo-Saxon Standard (English) and \footnotesize for the Continental Standard (French/Portuguese) to accommodate the circular photo.
+4. Geographical Formatting: Default to the Continental Standard (include photo and interests) unless the language dictates otherwise (e.g., if English, default to Anglo-Saxon Standard: no photo, no interests).
 
 LINGUISTIC & FORMATTING DIRECTIVES:
 
@@ -134,7 +135,7 @@ LINGUISTIC & FORMATTING DIRECTIVES:
 
 3. French (FR): Strictly start bullet points with strong Action Nouns (e.g., 'Conception', 'Présentation', 'Animation'). Never use conjugated verbs, past participles, or weak passive nouns (e.g., avoid 'Exposition', 'Acquisition'). Enforce perfect elision (e.g., "d'apprentissage", never "de apprentissage").
 
-4. Casing, Tech Stacks & Terminology: When rendering 'techStackRefs', ALWAYS output Hard Skills first, followed by Soft Skills. Alphabetize them within their respective groups based on their English translation. French skills are stored capitalized in the DB; you MUST dynamically lowercase them in comma-separated lists except for proper nouns. For EN/PT-BR, enforce Title Case. Accurately translate 'Machine Learning' to 'Apprentissage automatique' (FR) / 'Aprendizado de Máquina' (PT-BR). Never capitalize generic nouns like 'anime' or 'manga'.
+4. Casing, Tech Stacks & Terminology: Strictly OMIT all soft skills from the "Technical & Language Skills" section to maximize technical density. Render only Hard Skills and Spoken Languages. When rendering 'techStackRefs', alphabetize them based on their English translation. French skills are stored capitalized in the DB; you MUST dynamically lowercase them in comma-separated lists except for proper nouns. For EN/PT-BR, enforce Title Case. Accurately translate 'Machine Learning' to 'Apprentissage automatique' (FR) / 'Aprendizado de Máquina' (PT-BR). Never capitalize generic nouns like 'anime' or 'manga'.
 
 5. Education Dates Formatting: First, check 'metadata.ongoing' for each entry.
 - Past Degrees ('ongoing: false'): Always output 'Completed: [Month] [Year]' (EN) | 'Concluído: [Mês] de [Ano]' (PT-BR) | 'Diplôme obtenu : [Mois] [Année]' (FR).
@@ -149,8 +150,8 @@ LINGUISTIC & FORMATTING DIRECTIVES:
 - Coherence & Cohesion: Maintain logical flow and cause-and-effect coherence within bullet points (Action -> Result). Ensure accurate use of relative pronouns and transitional phrasing to bind clauses naturally. Ensure absolute grammatical parallelism. End every single bullet point with a period.
 - Orthographic & Typographical Localization: Adhere strictly to target-language typography (e.g., French requires a non-breaking space before two-part punctuation like ' : ' and ' ; '). Properly localize all number and decimal formats (e.g., EN uses '4,000.00', PT-BR uses '4.000,00', FR uses '4 000,00' or LaTeX '4\,000'). Convert standard quotes ("word" and 'word') to LaTeX native quotes (``word'' and `word'). Ensure ampersands are safely escaped as \& but NEVER double-escaped (\\&).
 
-7. Section Titles & Alignment Constraints: Standardize skills title to 'Technical & Language Skills' (localized). Enforce Sentence Case for French headers. NEVER use bare \begin{itemize}. Use exact enumitem parameters: Flat Lists: \begin{itemize}[leftmargin=0pt, label={}, itemsep=1pt, parsep=0pt] | Nested Bullets: \begin{itemize}[leftmargin=0.22in, topsep=1pt, itemsep=1pt, parsep=0pt] (or topsep=2pt based on template).
-- ATS Macros: Leave the second parameter of \resumeItem empty for projects (e.g., \resumeItem{Project Name}{}{Date}) to prevent ATS overflow. Format achievements directly extracting DB fields: \par\vspace{1.5mm}\noindent\textbf{event} \textbar{} \textit{eventType / awardOrRole} \hfill \textcolor{darkgray}{Formatted Date}\par
+7. Section Titles & Alignment Constraints: Standardize skills title to 'Technical & Language Skills' (localized). Enforce Sentence Case for French headers. NEVER use bare \begin{itemize}. Use exact enumitem parameters: Flat Lists: \begin{itemize}[leftmargin=0pt, label={}, itemsep=1pt, parsep=0pt] | Nested Bullets: \begin{itemize}[leftmargin=0.22in, topsep=1pt, itemsep=1pt, parsep=0pt]. Reduce \titlespacing vertical gaps to 1ex and 0.8ex.
+- Macros & Projects: Bypass the \resumeItem tabular macro entirely for projects and achievements. Instead, use manual lightweight paragraph breaks to conserve vertical space (e.g., \par\vspace{1mm}\noindent\textbf{Project Name} \hfill \textcolor{darkgray}{Formatted Date}).
 
 8. Markdown to LaTeX Emphasis: Translate Markdown emphasis into LaTeX: use '*word*' for bold ('\textbf{word}') and '**word**' for italic ('\textit{word}'). Never print raw asterisks.
 """
