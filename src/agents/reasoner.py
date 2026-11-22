@@ -2,6 +2,8 @@
 Reasoner Agent module for selecting relevant professional data.
 """
 
+from typing import Any
+
 from src.agents.base import AgentFactory
 from src.config import Config
 from src.prompts.reasoner_prompts import get_reasoner_prompt
@@ -19,8 +21,8 @@ class ReasonerAgent:
     def analyze_and_filter(
         self,
         job_description: str,
-        professional_data: dict,
-        strategy: str = "general",
+        professional_data: dict[str, Any],
+        strategy: str = "targeted_resume",
         document_type: str = "resume",
     ) -> str:
         """
@@ -30,7 +32,10 @@ class ReasonerAgent:
         print(f"Loading {self.model_name} into RAM (This might take a few seconds)...")
 
         prompt = get_reasoner_prompt(
-            job_description, professional_data, strategy, document_type
+            job_description=job_description,
+            professional_data=professional_data,
+            strategy=strategy,
+            document_type=document_type,
         )
 
         filtered_content = self.llm.generate(prompt=prompt, model_name=self.model_name)

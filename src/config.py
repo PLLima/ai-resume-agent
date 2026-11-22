@@ -28,3 +28,6 @@ class Config:
     LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama").lower()
     REASONER_MODEL = os.getenv("REASONER_MODEL", "llama3.1")
     CODER_MODEL = os.getenv("CODER_MODEL", "qwen2.5-coder:14b")
+
+    # Asset Configurations
+    DEFAULT_PROFILE_PHOTO = os.getenv("DEFAULT_PROFILE_PHOTO", None)

@@ -14,6 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.agents.coder import CoderAgent
 from src.agents.reasoner import ReasonerAgent
+from src.config import Config
 from src.db.client import DatabaseClient
 from src.utils.pdf_compiler import PDFCompiler
 
@@ -46,26 +47,54 @@ def main():
     parser.add_argument("--country", default="unknown-country", help="Target country")
     parser.add_argument(
         "--strategy",
-        default="online_ats",
-        choices=["in_person", "online_ats", "general"],
-        help="Strategy rules to apply (in_person, online_ats, or general)",
+        default="targeted_resume",
+        choices=[
+            "targeted_resume",
+            "networking_resume",
+            "master_cv",
+            "generalist_online_resume",
+            "online_ats",
+            "in_person",
+            "general",
+        ],
+        help=(
+            "Strategy rules to apply "
+            "(targeted_resume, networking_resume, master_cv, generalist_online_resume)"
+        ),
+    )
+    parser.add_argument(
+        "--profile-photo",
+        choices=["ProfilePhoto.jpg", "ProfilePhoto_light.jpg"],
+        default=Config.DEFAULT_PROFILE_PHOTO,
+        help="Profile photo asset filename (ProfilePhoto.jpg or ProfilePhoto_light.jpg)",
     )
 
     args = parser.parse_args()
-    document_type = args.document_type
-    language = args.language
-    strategy = args.strategy
-    company = args.company
-    country = args.country
+    document_type: str = args.document_type
+    language: str = args.language
+    raw_strategy: str = args.strategy
+    company: str = args.company
+    country: str = args.country
+    profile_photo: str | None = args.profile_photo
+
+    # Normalize strategy name for backwards compatibility
+    strategy_mapping: dict[str, str] = {
+        "online_ats": "targeted_resume",
+        "in_person": "networking_resume",
+        "general": "targeted_resume",
+    }
+    strategy: str = strategy_mapping.get(raw_strategy, raw_strategy)
 
     role = args.role
     if not role:
-        if strategy == "in_person":
+        if strategy == "networking_resume":
             role = "general-tech-in-person-networking"
-        elif strategy == "online_ats":
-            role = "software-engineer-embedded-linux"
+        elif strategy == "master_cv":
+            role = "master-curriculum-vitae"
+        elif strategy == "generalist_online_resume":
+            role = "generalist-software-engineer"
         else:
-            role = "software-engineer"
+            role = "software-engineer-embedded-linux"
 
     print(f"📄 Target Document Type: {document_type.replace('_', ' ').title()}")
     print(f"🌍 Target Language: {language.upper()}")
@@ -73,6 +102,8 @@ def main():
     print(f"🏢 Target Company: {company.title()}")
     print(f"🗺️  Target Country: {country.title()}")
     print(f"🎯 Strategy: {strategy.replace('_', ' ').title()}")
+    if profile_photo:
+        print(f"🖼️  Profile Photo Asset: {profile_photo}")
 
     db_client = DatabaseClient()
     professional_data = db_client.get_professional_data()
@@ -95,7 +126,10 @@ def main():
 
     coder = CoderAgent()
     latex_output = coder.generate_latex(
-        filtered_content, document_type=document_type, strategy=strategy
+        filtered_content=filtered_content,
+        document_type=document_type,
+        strategy=strategy,
+        profile_photo_filename=profile_photo,
     )
 
     compiler = PDFCompiler()
@@ -119,7 +153,7 @@ def main():
                 "targetRole": role,
                 "targetCompany": company,
                 "targetCountry": country,
-                "templateUsed": "default",
+                "templateUsed": strategy,
             },
             "finalOutput": {"pdfUrl": pdf_path},
         }

@@ -23,7 +23,8 @@ class CoderAgent:
         self,
         filtered_content: str,
         document_type: str = "resume",
-        strategy: str = "general",
+        strategy: str = "targeted_resume",
+        profile_photo_filename: str | None = None,
     ) -> str:
         """
         Generates LaTeX code based on the filtered professional data.
@@ -31,7 +32,12 @@ class CoderAgent:
         print(f"👨‍💻 STARTING STAGE 2: {self.model_name} (LaTeX Generation)")
         print(f"Loading {self.model_name} into RAM (This might take a few seconds)...")
 
-        prompt = get_coder_prompt(filtered_content, document_type, strategy)
+        prompt = get_coder_prompt(
+            filtered_content=filtered_content,
+            document_type=document_type,
+            strategy=strategy,
+            profile_photo_filename=profile_photo_filename,
+        )
 
         final_latex = self.llm.generate(prompt=prompt, model_name=self.model_name)
 
